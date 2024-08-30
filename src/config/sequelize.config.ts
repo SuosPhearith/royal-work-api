@@ -1,0 +1,21 @@
+import { SequelizeModuleOptions } from '@nestjs/sequelize';
+import { Dialect } from 'sequelize';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+/** @MySQL and @Postgresql */
+const sequelizeConfig: SequelizeModuleOptions = {
+    dialect: process.env.DB_CONNECTION as Dialect || 'mysql',
+    host: process.env.DB_HOST || 'localhost',
+    port: Number(process.env.DB_PORT) || 2002,
+    username: process.env.DB_USERNAME || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_DATABASE || 'pms',
+    timezone: '+07:00', // Timezone for Cambodia
+    // dialectOptions: {
+    //     useUTC: false, //for reading from database
+    // },
+    logging: false
+};
+
+export default sequelizeConfig;
