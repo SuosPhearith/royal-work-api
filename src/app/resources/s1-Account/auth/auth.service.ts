@@ -41,7 +41,7 @@ export class AuthService {
                         ],
                         is_active: true
                     },
-                    attributes: ['id', 'kh_name', 'en_name', 'user_title_id', 'avatar', 'phone', 'email', 'password'],
+                    attributes: ['id', 'kh_name', 'en_name', 'avatar', 'phone', 'email', 'password'],
                     include: [
                         {
                             association: 'roles',
@@ -51,9 +51,6 @@ export class AuthService {
                             },
                             include: [{ association: 'role', attributes: ['name', 'slug'] }],
                             order: [['id', 'ASC']]
-                        },
-                        {
-                            association: 'user_title'
                         },
                
                     ]
@@ -89,7 +86,7 @@ export class AuthService {
                         ],
                         is_active: true
                     },
-                    attributes: ['id', 'kh_name', 'en_name', 'user_title_id', 'avatar', 'phone', 'email', 'password'],
+                    attributes: ['id', 'kh_name', 'en_name', 'avatar', 'phone', 'email', 'password'],
                     include: [
                         {
                             association: 'roles',
@@ -99,9 +96,6 @@ export class AuthService {
                             },
                             include: [{ association: 'role', attributes: ['name', 'slug'] }],
                             order: [['id', 'ASC']]
-                        },
-                        {
-                            association: 'user_title'
                         },
                
                     ]

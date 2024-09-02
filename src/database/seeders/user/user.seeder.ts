@@ -2,13 +2,10 @@ import * as bcrypt from 'bcryptjs';
 
 import Role from '../../../models/user/role.model';
 import User from '../../../models/user/user.model';
-import UserRole from '../../../models/user/user_role.model'
-import UserTitle from '../../../models/user/user_title.model';
-import Sex from '../../../models/user/sex.model';
+import UserRole from '../../../models/user/user_role.model';
+
 export class UserSeeder {
   seed = async () => {
-    await Sex.bulkCreate(data.sex);
-    await UserTitle.bulkCreate(data.user_titles);
     await Role.bulkCreate(data.roles);
 
     for (const row of data.users) {
@@ -25,26 +22,7 @@ export class UserSeeder {
 
 // Mock-data
 const data = {
-  sex : [
-    {
-      kh_name: "ប្រុស",                   // id = 1
-      en_name: "Male",
-    },
-    {
-      kh_name: "ស្រី",                    // id = 2
-      en_name: "Female",
-    }
-  ],
-  user_titles: [
-    {
-      name: 'លោក',                    // id = 1
-      sex_id: 1
-    },
-    {
-      name: 'កញ្ញា',                     // id = 2
-      sex_id: 2
-    },
-  ],
+
 
   roles: [
     {
@@ -63,7 +41,6 @@ const data = {
     {
       kh_name: 'ឆាង ឈីត',             // id = 1
       en_name: 'Chharng Chhit', 
-      user_title_id: 1,
       avatar: '',
       phone: '012131415',
       password: 'H1X9ch',
@@ -72,7 +49,6 @@ const data = {
     {
       kh_name: 'ចាន់ សុវ៉ាន់ណែត',        // id = 2
       en_name: 'Chan Suvannet', 
-      user_title_id: 1,
       avatar: '',
       phone: '012493744',
       password: 'sAF5y9',
@@ -83,7 +59,6 @@ const data = {
     {
       kh_name: 'ហុី ជិន',                // id = 3
       en_name: 'Hy Chin', 
-      user_title_id: 1,
       avatar: '',
       phone: '012927424',
       password: 'otyTX8',
@@ -92,7 +67,6 @@ const data = {
     {
       kh_name: 'ឌី រ៉ុងរ៉ាត់',              // id = 4
       en_name: 'Dy Rongrath', 
-      user_title_id: 1,
       avatar: '',
       phone: '012083552',
       password: '9Hbfs2',
@@ -101,7 +75,6 @@ const data = {
     {
       kh_name: 'កប​ ដាវឹន',              // id = 4
       en_name: 'Korb Daven', 
-      user_title_id: 1,
       avatar: '',
       phone: '012345678',
       password: '1X9kdv',
