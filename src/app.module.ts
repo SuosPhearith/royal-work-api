@@ -19,7 +19,7 @@ import { DatabaseModule } from './models/database.module';
 // ===>> Role Register
 
 // Account
-import { AuthModule } from './app/resources/1. account/auth/auth.module';
+import { AuthModule } from './app/resources/s1-Account/auth/auth.module';
 import { appRoutes } from './app.routes';
 
 // User role

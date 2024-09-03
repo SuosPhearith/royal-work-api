@@ -12,7 +12,6 @@ export class UserDto {
     avatar: string;
     phone: string;
     email: string;
-    user_title: string;
     roles: RoleDto[];
 
     constructor(user: User) {
@@ -22,7 +21,6 @@ export class UserDto {
         this.avatar = user.avatar;
         this.phone = user.phone;
         this.email = user.email;
-        this.user_title = user.user_title.name;
         this.roles = user.roles.map(userRole => new RoleDto(userRole.role, userRole));
     }
 }

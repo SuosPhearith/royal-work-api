@@ -8,8 +8,8 @@ import UserRole from './user_role.model';
 class Role extends Model<Role> {
 
     // =============================================================>> Fields
-    @Column({ allowNull: false, type: DataType.STRING(50) })  name: string;
-    @Column({ allowNull: false, type: DataType.STRING(50) })  slug: string;
+    @Column({ allowNull: false, type: DataType.STRING(50) })  name?: string;
+    @Column({ allowNull: false, type: DataType.STRING(50) })  slug?: string;
 
     // =============================================================>> One to Many
     @HasMany(() => UserRole)     roles: UserRole[];

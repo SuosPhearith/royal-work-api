@@ -8,6 +8,10 @@ import "colors";
 import models from '../models/models';
 //=====================================================================
 import { UserSeeder } from './seeders/user/user.seeder';
+import { OrgsSeeder } from './seeders/orgs/orgs.seeder';
+import { FileSeeder } from './seeders/file/file.seeder';
+import { DocsSeeder } from './seeders/docs/docs.seeder';
+import { DocsTypeSeeder } from './seeders/docs/docs_type.seeder';
 
 
 
@@ -36,6 +40,22 @@ async function seeds() {
         /** @seedUser ======================================= *////////////////////////////////
         const userSeeder = new UserSeeder();
         await userSeeder.seed();
+
+        /** @seedOrgs ======================================= *////////////////////////////////
+        const orgsSeeder = new OrgsSeeder();
+        await orgsSeeder.seed();
+
+        /** @seedFile ======================================= *////////////////////////////////
+        const fileSeeder = new FileSeeder();
+        await fileSeeder.seed();
+
+        /** @seedDocsType ======================================= *////////////////////////////////
+        const docsTypeSeeder = new DocsTypeSeeder();
+        await docsTypeSeeder.seed();
+
+        /** @seedDocs ======================================= *////////////////////////////////
+        const docsSeeder = new DocsSeeder();
+        await docsSeeder.seed();
        
 
     

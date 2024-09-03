@@ -38,7 +38,7 @@ export class UpdateUserDto {
     @IsString()
     @IsNotEmpty(({ message: 'សូមបញ្ជូលលេខទូរសព្ទ' }))
     @Matches(/^(\+855|0)[1-9]\d{7,8}$/, {
-        message: 'Phone must be valit Cambodia phone number'
+        message: 'Phone must be valid Cambodia phone number'
     })
     phone: string
 
