@@ -5,8 +5,6 @@ import DocsEditor from "./docs/docs_editor.model";
 import DocsSaved from "./docs/docs_saved.model";
 import DocsType from "./docs/docs_type.model";
 import Orgs from "./orgs/orgs.model";
-import OrgsType from "./orgs/orgs_type.model";
-import Status from "./status/status.model";
 import Role from "./user/role.model";
 import User from "./user/user.model";
 import UserRole from "./user/user_role.model";
@@ -18,10 +16,7 @@ const models = [
     Role,
     User,
     UserRole,
-    // ===============>> Status
-    Status,
     // ===============>> Organization
-    OrgsType,
     Orgs,
     // ===============>> File
     FileDocs,

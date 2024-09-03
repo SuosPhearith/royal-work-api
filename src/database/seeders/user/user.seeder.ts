@@ -15,7 +15,7 @@ export class UserSeeder {
     await UserRole.bulkCreate(data.userRoles);
 
     console.log(
-      '\u001b[1;32m =                     User Data has been seeded. ',
+      '\u001b[1;32m =                     User has been seeded. ',
     );
   };
 }
@@ -41,7 +41,7 @@ const data = {
     {
       kh_name: 'ឆាង ឈីត',             // id = 1
       en_name: 'Chharng Chhit', 
-      avatar: '',
+      avatar: 'upload/file/32c06974-f6ff-4992-915d-640f05a44f26',
       phone: '012131415',
       password: 'H1X9ch',
       is_active: true,
@@ -49,7 +49,7 @@ const data = {
     {
       kh_name: 'ចាន់ សុវ៉ាន់ណែត',        // id = 2
       en_name: 'Chan Suvannet', 
-      avatar: '',
+      avatar: 'upload/file/616d22f4-55aa-4c59-ba8a-8bf026766c18',
       phone: '012493744',
       password: 'sAF5y9',
       is_active: true,
@@ -59,7 +59,7 @@ const data = {
     {
       kh_name: 'ហុី ជិន',                // id = 3
       en_name: 'Hy Chin', 
-      avatar: '',
+      avatar: 'upload/file/ffe83653-ea2e-4ebf-823c-9f24f67d32eb',
       phone: '012927424',
       password: 'otyTX8',
       is_active: true,
@@ -67,15 +67,15 @@ const data = {
     {
       kh_name: 'ឌី រ៉ុងរ៉ាត់',              // id = 4
       en_name: 'Dy Rongrath', 
-      avatar: '',
+      avatar: 'upload/file/e81c48ed-a480-4c85-9c12-9f59b0db9047',
       phone: '012083552',
       password: '9Hbfs2',
       is_active: true,
     },
     {
-      kh_name: 'កប​ ដាវឹន',              // id = 4
+      kh_name: 'កប​ ដាវឹន',              // id = 5
       en_name: 'Korb Daven', 
-      avatar: '',
+      avatar: 'upload/file/36882782-eae1-42cc-baea-bcf4fe429ef7',
       phone: '012345678',
       password: '1X9kdv',
       is_active: true,
