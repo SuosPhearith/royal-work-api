@@ -6,7 +6,7 @@ import DocsType from './docs_type.model';
 import Orgs from '../orgs/orgs.model';
 import FileDocs from '../file/file.model';
 
-@Table({ tableName: 'docs_deletion'})
+@Table({ tableName: 'docs_deletion', createdAt: 'created_at', updatedAt: 'updated_at'})
 class DocsDeletion extends Model<DocsDeletion> {
 
     // ======================================================================================>> Foreign Keys

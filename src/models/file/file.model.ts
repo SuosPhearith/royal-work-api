@@ -4,7 +4,7 @@ import Docs from '../docs/docs.model';
 
 // ===========================================================================>> Custom Library
 
-@Table({ tableName: 'file_docs'})
+@Table({ tableName: 'file_docs', createdAt: 'created_at', updatedAt: 'updated_at'})
 class FileDocs extends Model<FileDocs> {
 
     // ======================================================================>> Fields

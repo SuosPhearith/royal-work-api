@@ -8,7 +8,7 @@ import User from '../user/user.model';
 import DocsEditor from './docs_editor.model';
 import DocsSaved from './docs_saved.model';
 
-@Table({ tableName: 'docs'})
+@Table({ tableName: 'docs', createdAt: 'created_at', updatedAt: 'updated_at'})
 class Docs extends Model<Docs> {
 
     // ======================================================================================>> Foreign Keys

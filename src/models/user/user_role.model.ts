@@ -5,7 +5,7 @@ import { Model, Column, Table, ForeignKey, BelongsTo, DataType  } from 'sequeliz
 import User from './user.model';
 import Role from './role.model';
 
-@Table({ tableName: 'user_roles'})
+@Table({ tableName: 'user_roles', createdAt: 'created_at', updatedAt: 'updated_at'})
 class UserRole extends Model<UserRole> {
 
     // =============================================================>> Foreign Key

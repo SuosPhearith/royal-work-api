@@ -5,7 +5,7 @@ import { Model, Column, Table, HasMany, BelongsTo, ForeignKey } from 'sequelize-
 import Docs from './docs.model';
 import User from '../user/user.model';
 
-@Table({ tableName: 'docs_editor'})
+@Table({ tableName: 'docs_editor', createdAt: 'created_at', updatedAt: 'updated_at'})
 class DocsEditor extends Model<DocsEditor> {
     // ======================================================================================>> Foreign Keys
     @ForeignKey(()=> Docs) @Column({ onDelete: 'CASCADE' })         docs_id: number;
