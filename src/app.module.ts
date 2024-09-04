@@ -19,8 +19,9 @@ import { DatabaseModule } from './models/database.module';
 // ===>> Role Register
 
 // Account
-import { AuthModule } from './app/resources/s1-Account/auth/auth.module';
+import { AuthModule } from './app/resources/account/auth/auth.module';
 import { appRoutes } from './app.routes';
+import { SuperAdminModule } from './app/resources/superadmin/super-admin.module';
 
 // User role
 
@@ -34,7 +35,7 @@ import { appRoutes } from './app.routes';
         // ============================= >> Role Register << ========================== //
         DatabaseModule,
         AuthModule,
-        
+        SuperAdminModule,
         RouterModule.register(appRoutes)
     ],
     controllers: [AppController], // Controller Declaration
