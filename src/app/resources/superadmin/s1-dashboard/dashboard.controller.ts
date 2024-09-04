@@ -2,7 +2,8 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, Get } from '@nestjs/common';
 // =========================================================================>> Custom Library
 import { DashboardService } from './dashboard.service';
-import { DashboardDto } from './dashboard.dto';
+import { DashboardResponse } from './dashboard.types';
+import { AnyARecord } from 'dns';
 
 @Controller()
 export class DashboardController {
@@ -11,7 +12,7 @@ export class DashboardController {
 
     @Get()
     @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
-    async find(): Promise<DashboardDto> {
+    async find(): Promise<any> {
         try{
             return await this.dashboardService.read();
         } catch(error){

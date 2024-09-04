@@ -1,15 +1,6 @@
 // =========================================================================>> Third Party Library
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class DocsResponseDto{
-    title: string;
-    orgs: string;
-    docs_type: string;
-    file_size: number;
-    created_at: Date;
-    file_uri: string;
-    is_active: boolean;
-}
 
 export class DocsCUDto{
     @IsString()
