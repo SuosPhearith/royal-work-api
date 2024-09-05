@@ -1,23 +1,45 @@
 // =========================================================================>> Core Library
-import { Body, Controller, HttpCode, HttpStatus, Post, Get } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Param, Get, Query } from '@nestjs/common';
 // =========================================================================>> Custom Library
 import { DashboardService } from './dashboard.service';
-import { DashboardResponse } from './dashboard.types';
-import { AnyARecord } from 'dns';
+
 
 @Controller()
 export class DashboardController {
 
     constructor(private dashboardService: DashboardService) { }
 
-    @Get()
+    @Get('statistics')
     @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
-    async find(): Promise<any> {
+    async findStatistics(
+        @Query('key') key?: string
+    ): Promise<any> {
         try{
-            return await this.dashboardService.read();
+            return await this.dashboardService.readStatistics(key);
         } catch(error){
             throw new Error();
         }
     }
 
+    @Get('file-size')
+    @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
+    async findFileSize(): Promise<any> {
+        try{
+            return await this.dashboardService.readFileSize();
+        } catch(error){
+            throw new Error();
+        }
+    }
+
+    @Get('docs-list')
+    @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
+    async findDocsList(
+        @Query('key') key?: string
+    ): Promise<any> {
+        try{
+            return await this.dashboardService.readDocsList(key);
+        } catch(error){
+            throw new Error();
+        }
+    }
 }

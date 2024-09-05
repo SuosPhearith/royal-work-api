@@ -1,11 +1,13 @@
 // =========================================================================>> Core Library
 import { Injectable} from '@nestjs/common';
 import axios from 'axios';
+
+// =========================================================================>> Third Party Library
+import { Op } from 'sequelize';
+// =========================================================================>> Custom Library
 import Docs from 'src/models/docs/docs.model';
 import Orgs from 'src/models/orgs/orgs.model';
 import DocsType from 'src/models/docs/docs_type.model';
-// =========================================================================>> Third Party Library
-// =========================================================================>> Custom Library
 
 @Injectable()
 export class DashboardService {
@@ -18,13 +20,130 @@ export class DashboardService {
         xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       };
 
-    async read(): Promise<any> {
+    async readStatistics(key?: string): Promise<any> {
         try {
+            const today = new Date();
+            let whereCondition = {};
+
+            if (key === 'today') {
+                const startOfToday = new Date(today.setHours(0, 0, 0, 0));
+                const endOfToday = new Date(today.setHours(23, 59, 59, 999));
+                whereCondition = {
+                    date: {
+                        [Op.between]: [startOfToday, endOfToday],
+                    },
+                };
+            } else if (key === 'yesterday') {
+                const yesterday = new Date();
+                yesterday.setDate(today.getDate() - 1);
+                const startOfYesterday = new Date(yesterday.setHours(0, 0, 0, 0));
+                const endOfYesterday = new Date(yesterday.setHours(23, 59, 59, 999));
+                whereCondition = {
+                    date: {
+                        [Op.between]: [startOfYesterday, endOfYesterday],
+                    },
+                };
+            } else if (key === 'this_week') {
+                const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+                startOfWeek.setHours(0, 0, 0, 0);
+                const endOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+                endOfWeek.setHours(23, 59, 59, 999);
+                whereCondition = {
+                    date: {
+                        [Op.between]: [startOfWeek, endOfWeek],
+                    },
+                };
+            } else if (key === 'this_month') {
+                const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                endOfMonth.setHours(23, 59, 59, 999);
+                whereCondition = {
+                    date: {
+                        [Op.between]: [startOfMonth, endOfMonth],
+                    },
+                };
+            } else if (key === 'this_year') {
+                const startOfYear = new Date(today.getFullYear(), 0, 1);
+                const endOfYear = new Date(today.getFullYear(), 11, 31);
+                endOfYear.setHours(23, 59, 59, 999);
+                whereCondition = {
+                    date: {
+                        [Op.between]: [startOfYear, endOfYear],
+                    },
+                };
+            } else {
+                whereCondition = {};
+            }
+
             const total_docs = await Docs.count();
+            const added_docs = await Docs.count({
+                where: whereCondition,
+            });
             const total_orgs = await Orgs.count();
+            const added_orgs = await Orgs.count({
+                where: whereCondition,
+            });
             const num_active_docs = await Docs.count({where: {is_active: true}});
+            const added_active_docs = await Docs.count({
+                where: {
+                    is_active: true,
+                    ...whereCondition
+                }
+            });
             const num_inactive_docs = await Docs.count({where: {is_active: false}});
-            const docs1 = await Docs.findAll({
+            const added_inactive_docs = await Docs.count({
+                where: {
+                    is_active: false,
+                    ...whereCondition
+                }
+            });
+           
+            const data = {
+                    total_docs: total_docs || 0,
+                    added_docs: added_docs || 0,
+                    total_orgs: total_orgs || 0,
+                    added_orgs: added_orgs || 0,
+                    num_active_docs: num_active_docs || 0,
+                    added_active_docs: added_active_docs || 0,
+                    num_inactive_docs: num_inactive_docs || 0,
+                    added_inactive_docs: added_inactive_docs || 0,
+            }
+
+            return{
+                data
+            }
+        } catch (error) {
+            throw new Error();
+        }
+    }
+
+    async readFileSize(): Promise<any> {
+        try {
+
+            const data = await this.calculateSizes();
+
+            return{
+                data
+                }
+        } catch (error) {
+            throw new Error();
+        }
+    }
+
+    async readDocsList(key?: string): Promise<any> {
+        try {
+            let limitOption = {};
+
+            if (key === 'show_less') {
+                limitOption = { limit: 7, order: [['id', 'DESC']] };
+   
+            } else if (key === 'show_all') {
+                limitOption = { order: [['id', 'DESC']] };
+
+            } else{
+                limitOption = {};
+            }
+            const docsList = await Docs.findAll({
                 attributes: ['id', 'title', 'file_uri', 'extension', 'is_active', 'created_at', 'updated_at'],
                 include: [
                     {
@@ -36,10 +155,10 @@ export class DashboardService {
                         attributes: ['id', 'kh_name', 'en_name'],
                     }
                 ],
-    
+                ...limitOption,
             });
             // Map documents to extract file metadata
-            const docsWithMetadata =  docs1.map(doc => ({
+            const docsWithMetadata =  docsList.map(doc => ({
                 ...doc.get(),
                 file_uri: doc.file_uri,
                 extension: doc.extension
@@ -54,18 +173,20 @@ export class DashboardService {
                 file_size: `${(sizes[index].size / (1024 * 1024)).toFixed(2)} MB`,
                 
             }));
-            
-            // return {docsWithSizes};
-            const file_size = await this.calculateSizes();
+
+            const docs_type = await DocsType.findAll({
+                attributes: ['id', 'name'],
+            });
+
+            const orgs = await Orgs.findAll({
+                attributes: ['id', 'kh_name'],
+            });
+
+            const data =  {docs, docs_type, orgs};
 
             return{
-                total_docs: total_docs || 0,
-                total_orgs: total_orgs || 0,
-                num_active_docs: num_active_docs || 0,
-                num_inactive_docs: num_inactive_docs || 0,
-                file_size: file_size,
-                docs: docs,
-            }
+                data
+                }
         } catch (error) {
             throw new Error();
         }
