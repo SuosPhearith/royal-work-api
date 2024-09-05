@@ -11,7 +11,6 @@ class UserRole extends Model<UserRole> {
     // =============================================================>> Foreign Key
     @ForeignKey(() => User) @Column({ onDelete: 'CASCADE' })                        user_id: number;
     @ForeignKey(() => Role) @Column({ onDelete: 'CASCADE' })                        role_id: number;
-    @ForeignKey(() => User) @Column({ onDelete: 'CASCADE' })                        added_by_id: number;
 
 
     // =============================================================>> Field
@@ -21,7 +20,6 @@ class UserRole extends Model<UserRole> {
     // =============================================================>> Many to One
     @BelongsTo(() => Role)                                  role: Role;
     @BelongsTo(() => User)                                  user: User;
-    @BelongsTo(() => User, { foreignKey: 'added_by_id' })   creator: User;
 
 }
 
