@@ -1,9 +1,12 @@
 // =========================================================================>> Core Library
-import { Body, Controller, HttpCode, HttpStatus, Post, Get } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Delete, Param, Put } from '@nestjs/common';
 import { FileTypeService } from './fileType.service';
+import { Roles, UserRoleDecorator } from 'src/app/middleware/decorators/role.decorator';
+import { fileTypeResponse } from './fileType.types';
+import { fileTypeCreateDto, fileTypeUpdateDto } from './fileType.dto';
 // =========================================================================>> Custom Library
 
-
+@Roles(UserRoleDecorator.SUPERADMIN)
 @Controller()
 export class FileTypeController {
 
@@ -19,4 +22,43 @@ export class FileTypeController {
         }
     }
 
+    @Post()
+    @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
+    async create(
+        @Body() body: fileTypeCreateDto
+    ): Promise<any> {
+        try{
+            return await this.fileTypeService.create(body);
+
+        } catch(error){
+            throw new Error();
+        }
+    }
+
+    //===========================================>> Update
+    @Put(':id')
+    async update(
+            @Param('id') id: number, 
+            @Body() body: fileTypeUpdateDto
+    ): Promise<any> {
+        try {
+                return this.fileTypeService.update(id, body);
+            } catch (error) {
+    
+                throw new Error();
+            }
+    
+    }
+
+    //===========================================>> Delete 
+    @Delete(':id')
+    async delete(@Param('id') id: number) {
+
+        try {
+            return await this.fileTypeService.delete(id);
+
+        } catch (error) {
+            throw new Error();
+        }
+    }
 }
