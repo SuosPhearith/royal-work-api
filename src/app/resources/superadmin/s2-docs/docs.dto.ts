@@ -1,25 +1,55 @@
 // =========================================================================>> Third Party Library
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 
-export class DocsCUDto{
+export class DocsCreateDto{
     @IsString()
     @IsNotEmpty({ message: "Title is required!" })
     title: string;
 
-    @IsString()
+    @IsNumber()
     @IsNotEmpty({ message: "Organization is required!" })
-    orgs: string;
+    orgs_id: number;
 
-    @IsString()
+    @IsNumber()
+    @IsOptional()
+    file_id: number;
+
+    @IsNumber()
     @IsNotEmpty({ message: "Document type is required!" })
-    docs_type: string;
+    docs_type_id: number;
 
-    @IsString()
+    @IsBoolean()
     @IsNotEmpty({ message: "Status is required!" })
     is_active: boolean;
 
+    @IsNumber()
+    @IsOptional()
+    creator_id: number;
+}
+
+export class DocsUpdateDto{
     @IsString()
-    @IsNotEmpty({ message: "File is required!" })
-    file_uri: string;
+    @IsNotEmpty({ message: "Title is required!" })
+    title: string;
+
+    @IsNumber()
+    @IsNotEmpty({ message: "Organization is required!" })
+    orgs_id: number;
+
+    @IsNumber()
+    @IsOptional()
+    file_id: number;
+
+    @IsNumber()
+    @IsNotEmpty({ message: "Document type is required!" })
+    docs_type_id: number;
+
+    @IsBoolean()
+    @IsNotEmpty({ message: "Status is required!" })
+    is_active: boolean;
+
+    @IsNumber()
+    @IsOptional()
+    creator_id: number;
 }
