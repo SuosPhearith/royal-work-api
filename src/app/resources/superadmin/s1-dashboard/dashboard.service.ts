@@ -29,7 +29,7 @@ export class DashboardService {
                 const startOfToday = new Date(today.setHours(0, 0, 0, 0));
                 const endOfToday = new Date(today.setHours(23, 59, 59, 999));
                 whereCondition = {
-                    date: {
+                    created_at: {
                         [Op.between]: [startOfToday, endOfToday],
                     },
                 };
@@ -39,7 +39,7 @@ export class DashboardService {
                 const startOfYesterday = new Date(yesterday.setHours(0, 0, 0, 0));
                 const endOfYesterday = new Date(yesterday.setHours(23, 59, 59, 999));
                 whereCondition = {
-                    date: {
+                    created_at: {
                         [Op.between]: [startOfYesterday, endOfYesterday],
                     },
                 };
@@ -49,7 +49,7 @@ export class DashboardService {
                 const endOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6));
                 endOfWeek.setHours(23, 59, 59, 999);
                 whereCondition = {
-                    date: {
+                    created_at: {
                         [Op.between]: [startOfWeek, endOfWeek],
                     },
                 };
@@ -58,7 +58,7 @@ export class DashboardService {
                 const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
                 endOfMonth.setHours(23, 59, 59, 999);
                 whereCondition = {
-                    date: {
+                    created_at: {
                         [Op.between]: [startOfMonth, endOfMonth],
                     },
                 };
@@ -67,7 +67,7 @@ export class DashboardService {
                 const endOfYear = new Date(today.getFullYear(), 11, 31);
                 endOfYear.setHours(23, 59, 59, 999);
                 whereCondition = {
-                    date: {
+                    created_at: {
                         [Op.between]: [startOfYear, endOfYear],
                     },
                 };
@@ -113,6 +113,7 @@ export class DashboardService {
                 data
             }
         } catch (error) {
+            console.log(error);
             throw new Error();
         }
     }
