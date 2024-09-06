@@ -15,7 +15,7 @@ interface File {
 export class FileService {
 
     private fileBaseUrl = process.env.FILE_BASE_URL;
-    // private fileKey = process.env.FILE_KEY;
+    private fileKey = process.env.FILE_KEY;
     private fileUsername = process.env.FILE_USERNAME;
     private filePassword = process.env.FILE_PASSWORD;
 
@@ -24,7 +24,7 @@ export class FileService {
         const result: { file?: File, error?: string } = {};
         try {
             const body = {
-                // key: this.fileKey,
+                key: this.fileKey,
                 folder: folder,
                 image: base64
             }
