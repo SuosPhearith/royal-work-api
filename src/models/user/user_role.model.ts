@@ -5,13 +5,12 @@ import { Model, Column, Table, ForeignKey, BelongsTo, DataType  } from 'sequeliz
 import User from './user.model';
 import Role from './role.model';
 
-@Table({ tableName: 'user_roles'})
+@Table({ tableName: 'user_roles', createdAt: 'created_at', updatedAt: 'updated_at'})
 class UserRole extends Model<UserRole> {
 
     // =============================================================>> Foreign Key
     @ForeignKey(() => User) @Column({ onDelete: 'CASCADE' })                        user_id: number;
     @ForeignKey(() => Role) @Column({ onDelete: 'CASCADE' })                        role_id: number;
-    @ForeignKey(() => User) @Column({ onDelete: 'CASCADE' })                        added_by_id: number;
 
 
     // =============================================================>> Field
@@ -21,7 +20,6 @@ class UserRole extends Model<UserRole> {
     // =============================================================>> Many to One
     @BelongsTo(() => Role)                                  role: Role;
     @BelongsTo(() => User)                                  user: User;
-    @BelongsTo(() => User, { foreignKey: 'added_by_id' })   creator: User;
 
 }
 

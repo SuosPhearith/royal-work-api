@@ -4,7 +4,7 @@ import { Model, Column, Table, HasMany, DataType } from 'sequelize-typescript';
 // =========================================================================>> Custom Library
 import UserRole from './user_role.model';
 
-@Table({ tableName: 'role'})
+@Table({ tableName: 'role', createdAt: 'created_at', updatedAt: 'updated_at'})
 class Role extends Model<Role> {
 
     // =============================================================>> Fields

@@ -3,7 +3,7 @@ import { Model, Column, Table, HasMany, DataType, BelongsTo, ForeignKey } from '
 // ==================================================================================================>> Custom Library
 import Docs from '../docs/docs.model';
 
-@Table({ tableName: 'orgs'})
+@Table({ tableName: 'orgs', createdAt: 'created_at', updatedAt: 'updated_at'})
 class Orgs extends Model<Orgs> {
 
     // =============================================================================================>> Fields

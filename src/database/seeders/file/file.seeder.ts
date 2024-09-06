@@ -15,24 +15,24 @@ export class FileSeeder {
   
     file: [
       {   
-        name: 'doc',
-        image_uri: 'upload/file/9e763a12-4ad5-4fe9-8b97-372d23fef9bc',
+        name: 'docx',
+        image_uri: 'upload/file/28cd810e-fb35-4031-a04a-8b8afcda80b5',
       },
       {
         name: 'pdf',
-        image_uri: 'upload/file/92f3a1cf-e3c1-4e63-8334-e5f387cf2ed4',
+        image_uri: 'upload/file/98f400ff-981d-40bb-a22c-ed216ce87db6',
       },
       {
         name: 'xlsx',
-        image_uri: 'upload/file/f7dca7ad-c03f-4bbf-a636-3e69dd767dee',
+        image_uri: 'upload/file/cc7123a0-ccab-45b2-afce-9cde8c8b38db',
       },
       {
         name: 'png',
-        image_uri: 'upload/file/d2a093ee-69a7-4561-b7fb-0c8a03fc7747',
+        image_uri: 'upload/file/1606204c-cb3d-402e-87e4-cf5a9ce0a310',
       },
       {
         name: 'jpg',
-        image_uri: 'upload/file/2aa51ee0-66b0-4fe5-91f6-9c8254f7c531',
+        image_uri: 'upload/file/43e55065-56a3-43ed-ab6c-18d1172b4a08',
       },
      
     ],
