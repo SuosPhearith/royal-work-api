@@ -1,5 +1,5 @@
 // =========================================================================>> Core Library
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Delete, Param, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Delete, Param, Put, UploadedFile, UseInterceptors, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 // =========================================================================>> Custom Library
 import { User as UserDecorator }    from "../../../middleware/decorators/user.decorator";
@@ -7,9 +7,11 @@ import { DocsService } from './docs.service';
 import { Roles, UserRoleDecorator } from 'src/app/middleware/decorators/role.decorator';
 import { DocsCreateDto, DocsUpdateDto } from './docs.dto';
 import User from 'src/models/user/user.model';
+import { AuthGuard } from 'src/app/middleware/guards/auth.guard';
 
 
 @Roles(UserRoleDecorator.SUPERADMIN)
+@UseGuards(AuthGuard)
 @Controller()
 export class DocsController {
 
