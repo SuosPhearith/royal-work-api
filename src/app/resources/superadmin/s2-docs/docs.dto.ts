@@ -12,20 +12,12 @@ export class DocsCreateDto{
     orgs_id: number;
 
     @IsNumber()
-    @IsOptional()
-    file_id: number;
-
-    @IsNumber()
     @IsNotEmpty({ message: "Document type is required!" })
     docs_type_id: number;
 
     @IsBoolean()
     @IsNotEmpty({ message: "Status is required!" })
     is_active: boolean;
-
-    @IsNumber()
-    @IsOptional()
-    creator_id: number;
 }
 
 export class DocsUpdateDto{
@@ -38,18 +30,10 @@ export class DocsUpdateDto{
     orgs_id: number;
 
     @IsNumber()
-    @IsOptional()
-    file_id: number;
-
-    @IsNumber()
     @IsNotEmpty({ message: "Document type is required!" })
     docs_type_id: number;
 
     @IsBoolean()
     @IsNotEmpty({ message: "Status is required!" })
     is_active: boolean;
-
-    @IsNumber()
-    @IsOptional()
-    creator_id: number;
 }

@@ -45,29 +45,36 @@ export class DocsController {
     }
 
     // //===========================================>> Update
-    // @Put(':id')
-    // async update(
-    //         @Param('id') id: number, 
-    //         @Body() body: DocsUpdateDto
-    // ): Promise<any> {
-    //     try {
-    //             return this.docsService.update(id, body);
-    //         } catch (error) {
+    @Put(':id')
+    @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
+    @UseInterceptors(FileInterceptor('file'))
+    async update(
+        @Param('id') id: number,
+        @UploadedFile() file: Express.Multer.File,
+        @Body() body: DocsUpdateDto,
+        @UserDecorator() user: User
+    ): Promise<any> {
+        try {
+                return this.docsService.update(id, body, file, user.id);
+            } catch (error) {
     
-    //             throw new Error();
-    //         }
+                throw new Error();
+            }
     
-    // }
+    }
 
     // //===========================================>> Delete 
-    // @Delete(':id')
-    // async delete(@Param('id') id: number) {
+    @Delete(':id')
+    async delete(
+        @Param('id') id: number,
+        @UserDecorator() user: User
+    ) : Promise<any>{
 
-    //     try {
-    //         return await this.docsService.delete(id);
+        try {
+            return await this.docsService.delete(id, user.id);
 
-    //     } catch (error) {
-    //         throw new Error();
-    //     }
-    // }
+        } catch (error) {
+            throw new Error();
+        }
+    }
 }
