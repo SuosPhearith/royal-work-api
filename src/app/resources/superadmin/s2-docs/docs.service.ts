@@ -25,7 +25,7 @@ export class DocsService {
 
     constructor(private fileService: FileService){}
 
-    async read(search?: string): Promise<any> {
+    async read(search?: string, limit: number = 10, page: number = 1): Promise<any> {
         try {
             // Deleted expired docs in bin
             this.deleteExpiredDocuments();
@@ -39,6 +39,16 @@ export class DocsService {
                     ],
                 };
             }
+
+            // Validate limit and page numbers
+            if (isNaN(limit) || limit <= 0) {
+                limit = 10; // Default limit if invalid
+            }
+            if (isNaN(page) || page <= 0) {
+                page = 1; // Default page number if invalid
+            }
+
+            const offset = (page - 1) * limit;
 
             //Start doing its core task
             const docsList = await Docs.findAll({
@@ -54,8 +64,15 @@ export class DocsService {
                     }
                 ],
                 order: [['id', 'ASC']],
+                where: searchCriteria,
+                limit,
+                offset,
+            });
+
+            const totalCount = await Docs.count({
                 where: searchCriteria
             });
+
             // Map documents to extract file metadata
             const docsWithMetadata =  docsList.map(doc => ({
                 ...doc.get(),
@@ -83,8 +100,16 @@ export class DocsService {
 
             const data =  {docs, docs_type, orgs};
 
+            const totalPages = Math.ceil(totalCount / limit);
+
             return{
-                data
+                data,
+                pagination: {
+                    current_page: page,
+                    per_page: limit,
+                    total_items: totalCount,
+                    total_pages: totalPages,
+                },
                 }
         } catch (error) {
             throw new Error();

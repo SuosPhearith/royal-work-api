@@ -19,9 +19,13 @@ export class DocsController {
 
     @Get()
     @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
-    async find(@Query('search') search?: string): Promise<any> {
+    async find(
+        @Query('search') search?: string,
+        @Query('limit') limit: number = 10,
+        @Query('page') page: number = 1
+    ): Promise<any> {
         try{
-            return await this.docsService.read(search);
+            return await this.docsService.read(search, limit, page);
         } catch(error){
             throw new Error();
         }
