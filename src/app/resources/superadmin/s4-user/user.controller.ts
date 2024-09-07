@@ -1,5 +1,5 @@
 // =========================================================================>> Core Library
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Param, Delete, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Param, Delete, UseGuards, Query } from '@nestjs/common';
 // =========================================================================>> Custom Library
 import { UserService } from './user.service';
 import { UserCreateDto, UserPasswordUpdateDto, UserUpdateDto } from './user.dto';
@@ -15,9 +15,9 @@ export class UserController {
 
     @Get()
     @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
-    async find(): Promise<any> {
+    async find(@Query('search') search?: string): Promise<any> {
         try{
-            return await this.userService.read();
+            return await this.userService.read(search);
         } catch(error){
             throw new Error();
         }

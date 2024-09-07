@@ -1,5 +1,5 @@
 // =========================================================================>> Core Library
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Param, Delete, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Param, Delete, Put, UseGuards, Query } from '@nestjs/common';
 // =========================================================================>> Custom Library
 import { OrgsService } from './orgs.service';
 import { Roles, UserRoleDecorator } from 'src/app/middleware/decorators/role.decorator';
@@ -16,9 +16,9 @@ export class OrgsController {
     //===========================================>> Get
     @Get()
     @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
-    async find(): Promise<any> {
+    async find(@Query('search') search?: string): Promise<any> {
         try{
-            return await this.orgsService.read();
+            return await this.orgsService.read(search);
         } catch(error){
             throw new Error();
         }

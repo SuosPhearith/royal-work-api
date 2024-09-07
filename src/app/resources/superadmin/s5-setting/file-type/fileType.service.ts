@@ -1,6 +1,6 @@
 // =========================================================================>> Core Library
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Sequelize } from 'sequelize';
+import { Sequelize, Op } from 'sequelize';
 import Docs from 'src/models/docs/docs.model';
 import FileDocs from 'src/models/file/file.model';
 // =========================================================================>> Third Party Library
@@ -10,8 +10,18 @@ import { FileService } from 'src/app/services/file.service';
 export class FileTypeService {
 
     constructor(private fileService: FileService){}
-    async read(): Promise<any> {
+    async read(search? : string): Promise<any> {
         try {
+
+            let searchCriteria = {};
+            if(search){
+                searchCriteria = {
+                    [Op.or]: [
+                    { name: { [Op.iLike]: `%${search}%` } },
+                    ],
+                };
+            }
+
             const data = await FileDocs.findAll({
                 attributes: ['id', 'name', 'image_uri'],
                 include: [
@@ -21,6 +31,7 @@ export class FileTypeService {
                     }
                 ],
                 order: [['id', 'ASC']],
+                where: searchCriteria
             });
             const result = data.map(fileDoc => {
                 const fileDocJson = fileDoc.toJSON();

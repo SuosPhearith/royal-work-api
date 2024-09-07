@@ -12,8 +12,21 @@ import { FileService } from 'src/app/services/file.service';
 export class UserService {
     constructor(private fileService: FileService){}
     
-    async read(): Promise<any> {
+    async read(search?: string): Promise<any> {
         try {
+            
+            let searchCriteria = {};
+            if(search){
+                searchCriteria = {
+                    [Op.or]: [
+                    { kh_name: { [Op.iLike]: `%${search}%` } },
+                    { en_name: { [Op.iLike]: `%${search}%` } },
+                    { phone: { [Op.iLike]: `%${search}%` } },
+                    { email: { [Op.iLike]: `%${search}%` } },
+                    ],
+                };
+            }
+
             const users = await User.findAll({
                 attributes: ['id', 'kh_name', 'en_name', 'avatar', 'phone', 'email', 'is_active', 'created_at', 'updated_at'],
                 include: [
@@ -28,7 +41,8 @@ export class UserService {
                         ]
                     }
                 ],
-                order: [['id', 'ASC']]
+                order: [['id', 'ASC']],
+                where: searchCriteria
             });
 
             users.forEach(user => {

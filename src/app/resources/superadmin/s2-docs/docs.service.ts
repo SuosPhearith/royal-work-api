@@ -25,10 +25,20 @@ export class DocsService {
 
     constructor(private fileService: FileService){}
 
-    async read(): Promise<any> {
+    async read(search?: string): Promise<any> {
         try {
             // Deleted expired docs in bin
             this.deleteExpiredDocuments();
+
+            let searchCriteria = {};
+            if(search){
+                searchCriteria = {
+                    [Op.or]: [
+                    { title: { [Op.iLike]: `%${search}%` } },
+                    { extension: { [Op.iLike]: `%${search}%` } },
+                    ],
+                };
+            }
 
             //Start doing its core task
             const docsList = await Docs.findAll({
@@ -43,7 +53,8 @@ export class DocsService {
                         attributes: ['id', 'kh_name', 'en_name']
                     }
                 ],
-                order: [['id', 'ASC']]
+                order: [['id', 'ASC']],
+                where: searchCriteria
             });
             // Map documents to extract file metadata
             const docsWithMetadata =  docsList.map(doc => ({

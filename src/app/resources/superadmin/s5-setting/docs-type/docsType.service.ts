@@ -1,15 +1,23 @@
 // =========================================================================>> Core Library
 import { BadRequestException, Injectable } from '@nestjs/common';
+// =========================================================================>> Third Party Library
+import { Sequelize, Op } from 'sequelize';
+// =========================================================================>> Custom Library
 import Docs from 'src/models/docs/docs.model';
 import DocsType from 'src/models/docs/docs_type.model';
-// =========================================================================>> Third Party Library
-// =========================================================================>> Custom Library
-
 @Injectable()
 export class DocsTypeService {
 
-    async read(): Promise<any> {
+    async read(search?: string): Promise<any> {
         try {
+            let searchCriteria = {};
+            if(search){
+                searchCriteria = {
+                    [Op.or]: [
+                    { name: { [Op.iLike]: `%${search}%` } },
+                    ],
+                };
+            }
 
             const docs_type = await DocsType.findAll({
                 attributes: ['id', 'name'],
@@ -19,7 +27,8 @@ export class DocsTypeService {
                         attributes: ['id']
                     }
                 ],
-                order: [['id', 'ASC']]
+                order: [['id', 'ASC']],
+                where: searchCriteria
             });
             const result = docs_type.map(docstype => {
                 const docstypeJson = docstype.toJSON();

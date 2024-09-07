@@ -1,5 +1,5 @@
 // =========================================================================>> Core Library
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Delete, Param, Put, UploadedFile, UseInterceptors, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Delete, Param, Put, UploadedFile, UseInterceptors, UseGuards, Query } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 // =========================================================================>> Custom Library
 import { User as UserDecorator }    from "../../../middleware/decorators/user.decorator";
@@ -19,9 +19,9 @@ export class DocsController {
 
     @Get()
     @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
-    async find(): Promise<any> {
+    async find(@Query('search') search?: string): Promise<any> {
         try{
-            return await this.docsService.read();
+            return await this.docsService.read(search);
         } catch(error){
             throw new Error();
         }

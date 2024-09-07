@@ -3,6 +3,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import Docs from 'src/models/docs/docs.model';
 import Orgs from 'src/models/orgs/orgs.model';
 // =========================================================================>> Third Party Library
+import { Op } from "sequelize";
 // =========================================================================>> Custom Library
 import { FileService } from 'src/app/services/file.service';
 
@@ -10,8 +11,17 @@ import { FileService } from 'src/app/services/file.service';
 export class OrgsService {
     constructor(private fileService: FileService){}
 
-    async read(): Promise<any> {
+    async read(search?: string): Promise<any> {
         try {
+            let searchCriteria = {};
+            if(search){
+                searchCriteria = {
+                    [Op.or]: [
+                    { kh_name: { [Op.iLike]: `%${search}%` } },
+                    { en_name: { [Op.iLike]: `%${search}%` } },
+                    ],
+                };
+            }
             const docs_type = await Orgs.findAll({
                 attributes: ['id', 'kh_name', 'en_name', 'image_uri', 'created_at'],
                 include: [
@@ -20,7 +30,8 @@ export class OrgsService {
                         attributes: ['id']
                     }
                 ],
-                order: [['id', 'ASC']]
+                order: [['id', 'ASC']],
+                where: searchCriteria
             });
             const result = docs_type.map(orgs => {
                 const orgsJson = orgs.toJSON();
