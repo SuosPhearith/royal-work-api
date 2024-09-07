@@ -1,12 +1,13 @@
 // =========================================================================>> Core Library
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Delete, Param, Put } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Delete, Param, Put, UseGuards, Query } from '@nestjs/common';
+// =========================================================================>> Custom Library
 import { FileTypeService } from './fileType.service';
 import { Roles, UserRoleDecorator } from 'src/app/middleware/decorators/role.decorator';
-import { fileTypeResponse } from './fileType.types';
 import { fileTypeCreateDto, fileTypeUpdateDto } from './fileType.dto';
-// =========================================================================>> Custom Library
+import { AuthGuard } from 'src/app/middleware/guards/auth.guard';
 
 @Roles(UserRoleDecorator.SUPERADMIN)
+@UseGuards(AuthGuard)
 @Controller()
 export class FileTypeController {
 
@@ -14,9 +15,9 @@ export class FileTypeController {
 
     @Get()
     @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
-    async find(): Promise<any> {
+    async find(@Query('search') search?: string): Promise<any> {
         try{
-            return await this.fileTypeService.read();
+            return await this.fileTypeService.read(search);
         } catch(error){
             throw new Error();
         }

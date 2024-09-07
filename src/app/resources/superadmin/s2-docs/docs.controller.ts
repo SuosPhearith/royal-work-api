@@ -1,5 +1,5 @@
 // =========================================================================>> Core Library
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Delete, Param, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Delete, Param, Put, UploadedFile, UseInterceptors, UseGuards, Query } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 // =========================================================================>> Custom Library
 import { User as UserDecorator }    from "../../../middleware/decorators/user.decorator";
@@ -7,9 +7,11 @@ import { DocsService } from './docs.service';
 import { Roles, UserRoleDecorator } from 'src/app/middleware/decorators/role.decorator';
 import { DocsCreateDto, DocsUpdateDto } from './docs.dto';
 import User from 'src/models/user/user.model';
+import { AuthGuard } from 'src/app/middleware/guards/auth.guard';
 
 
 @Roles(UserRoleDecorator.SUPERADMIN)
+@UseGuards(AuthGuard)
 @Controller()
 export class DocsController {
 
@@ -17,9 +19,13 @@ export class DocsController {
 
     @Get()
     @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
-    async find(): Promise<any> {
+    async find(
+        @Query('search') search?: string,
+        @Query('limit') limit: number = 10,
+        @Query('page') page: number = 1
+    ): Promise<any> {
         try{
-            return await this.docsService.read();
+            return await this.docsService.read(search, limit, page);
         } catch(error){
             throw new Error();
         }
@@ -43,29 +49,36 @@ export class DocsController {
     }
 
     // //===========================================>> Update
-    // @Put(':id')
-    // async update(
-    //         @Param('id') id: number, 
-    //         @Body() body: DocsUpdateDto
-    // ): Promise<any> {
-    //     try {
-    //             return this.docsService.update(id, body);
-    //         } catch (error) {
+    @Put(':id')
+    @HttpCode(HttpStatus.OK)    //return status code: 200 if succeeded!
+    @UseInterceptors(FileInterceptor('file'))
+    async update(
+        @Param('id') id: number,
+        @UploadedFile() file: Express.Multer.File,
+        @Body() body: DocsUpdateDto,
+        @UserDecorator() user: User
+    ): Promise<any> {
+        try {
+                return this.docsService.update(id, body, file, user.id);
+            } catch (error) {
     
-    //             throw new Error();
-    //         }
+                throw new Error();
+            }
     
-    // }
+    }
 
     // //===========================================>> Delete 
-    // @Delete(':id')
-    // async delete(@Param('id') id: number) {
+    @Delete(':id')
+    async delete(
+        @Param('id') id: number,
+        @UserDecorator() user: User
+    ) : Promise<any>{
 
-    //     try {
-    //         return await this.docsService.delete(id);
+        try {
+            return await this.docsService.delete(id, user.id);
 
-    //     } catch (error) {
-    //         throw new Error();
-    //     }
-    // }
+        } catch (error) {
+            throw new Error();
+        }
+    }
 }

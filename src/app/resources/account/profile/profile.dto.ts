@@ -1,10 +1,14 @@
-import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, Matches, MinLength } from 'class-validator'
+import { IsEmail, IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, Matches, MinLength, IsNumber } from 'class-validator'
 import { UsersActiveEnum } from 'src/app/enums/user/active.enum';
 
-export class CreateUserDto {
+export class UpdateProfileDto {
     @IsString()
     @IsNotEmpty()
-    name: string
+    kh_name: string
+
+    @IsString()
+    @IsOptional()
+    en_name: string
 
     @IsString()
     @IsNotEmpty(({ message: 'សូមបញ្ជូលលេខទូរសព្ទ' }))
@@ -14,15 +18,16 @@ export class CreateUserDto {
     phone: string
 
     @IsEmail()
+    @IsOptional()
     email: string
 
-    @MinLength(6)
     @IsString()
-    password: string
-
-    @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     avatar: string
+
+    @IsNumber()
+    @IsNotEmpty({ message: "Role is required!" })
+    role_id: number;
 }
 
 export class UpdateUserDto {

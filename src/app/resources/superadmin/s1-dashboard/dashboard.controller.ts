@@ -1,9 +1,12 @@
 // =========================================================================>> Core Library
-import { Body, Controller, HttpCode, HttpStatus, Param, Get, Query } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Param, Get, Query, UseGuards } from '@nestjs/common';
 // =========================================================================>> Custom Library
 import { DashboardService } from './dashboard.service';
+import { AuthGuard } from 'src/app/middleware/guards/auth.guard';
+import { Roles, UserRoleDecorator } from 'src/app/middleware/decorators/role.decorator';
 
-
+@Roles(UserRoleDecorator.SUPERADMIN)
+@UseGuards(AuthGuard)
 @Controller()
 export class DashboardController {
 

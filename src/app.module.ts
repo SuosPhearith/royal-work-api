@@ -22,6 +22,7 @@ import { DatabaseModule } from './models/database.module';
 import { AuthModule } from './app/resources/account/auth/auth.module';
 import { appRoutes } from './app.routes';
 import { SuperAdminModule } from './app/resources/superadmin/super-admin.module';
+import { ProfileModule } from './app/resources/account/profile/profile.module';
 
 // User role
 
@@ -35,6 +36,7 @@ import { SuperAdminModule } from './app/resources/superadmin/super-admin.module'
         // ============================= >> Role Register << ========================== //
         DatabaseModule,
         AuthModule,
+        ProfileModule,
         SuperAdminModule,
         RouterModule.register(appRoutes)
     ],

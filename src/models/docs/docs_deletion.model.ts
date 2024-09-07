@@ -19,7 +19,9 @@ class DocsDeletion extends Model<DocsDeletion> {
     // ======================================================================================>> Fields
     @Column({ allowNull: false, type: DataType.STRING(350) })                   title?: string;
     @Column({ allowNull: false, type: DataType.STRING(100) })                   file_uri?: string;
+    @Column({ allowNull: false, type: DataType.STRING(10) })                    extension?: string;
     @Column({ allowNull: false, type: DataType.BOOLEAN, defaultValue: false })  is_active?: boolean;
+    @Column({ allowNull: false, type: DataType.DATE })                          expiry_date?: Date;
 
     // =====================================================================================>> Many to one
     @BelongsTo(() => User)                                                      deleter: User;
