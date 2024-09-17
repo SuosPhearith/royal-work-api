@@ -27,6 +27,7 @@ import { SearchAreaModule } from './app/resources/user-web/search-area/search-ar
 import { MinistryModule } from './app/resources/user-web/ministry/ministry.module';
 import { FooterModule } from './app/resources/user-web/footer/footer.module';
 import { ListDocsModule } from './app/resources/user-web/list-docs/list-docs.module';
+import { DocumentsModule } from './app/resources/user-web/documents/documents.module';
 
 // User role
 
@@ -51,6 +52,7 @@ import { ListDocsModule } from './app/resources/user-web/list-docs/list-docs.mod
     MinistryModule,
     FooterModule,
     ListDocsModule,
+    DocumentsModule,
   ],
   controllers: [AppController], // Controller Declaration
   providers: [
