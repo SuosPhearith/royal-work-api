@@ -1,10 +1,11 @@
 // =========================================================================>> Third Party Library
-import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
 
 
 export class DocsCreateDto{
     @IsString()
     @IsNotEmpty({ message: "Title is required!" })
+    @MaxLength(300, {message: "Title is too long"})
     title: string;
 
     @IsNumber()
@@ -15,14 +16,14 @@ export class DocsCreateDto{
     @IsNotEmpty({ message: "Document type is required!" })
     docs_type_id: number;
 
-    @IsBoolean()
     @IsNotEmpty({ message: "Status is required!" })
-    is_active: boolean;
+    is_active: boolean | string;
 }
 
 export class DocsUpdateDto{
     @IsString()
     @IsNotEmpty({ message: "Title is required!" })
+    @MaxLength(300, {message: "Title is too long"})
     title: string;
 
     @IsNumber()
@@ -33,7 +34,6 @@ export class DocsUpdateDto{
     @IsNotEmpty({ message: "Document type is required!" })
     docs_type_id: number;
 
-    @IsBoolean()
     @IsNotEmpty({ message: "Status is required!" })
-    is_active: boolean;
+    is_active: boolean | string;
 }

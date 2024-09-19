@@ -158,7 +158,7 @@ export class DocsService {
                 orgs_id: body.orgs_id,
                 file_id: file_id,
                 title: body.title,
-                is_active: Boolean(body.is_active),
+                is_active: body.is_active,
                 file_uri: fileUri,
                 extension: extension,
             });
@@ -219,7 +219,7 @@ export class DocsService {
                 orgs_id: body.orgs_id,
                 docs_type_id: body.docs_type_id,
                 file_id: file_id,
-                is_active: Boolean(body.is_active),
+                is_active: body.is_active,
                 file_uri: fileUri,
                 extension: extension,
 
@@ -234,7 +234,7 @@ export class DocsService {
            
             return {
                 status: 'success',
-                message: 'បង្កើតឯកសារបានដោយជោគជ័យ',
+                message: 'កែប្រែឯកសារបានដោយជោគជ័យ',
                 data: res_docs,
 
             };
