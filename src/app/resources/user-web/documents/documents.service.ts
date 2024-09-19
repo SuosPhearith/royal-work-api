@@ -17,7 +17,7 @@ export class DocumentsService {
       ],
     });
     const newDocsData: EachDocumentKeyDataType = {
-      title: 'ឯកសារថ្មីៗ',
+      title: lang === 'kh' ? 'ឯកសារថ្មីៗ' : 'New Documents',
       seeAll: lang === 'kh' ? 'ទាំងអស់' : 'See all',
       docKeys: getNewDocs.map((doc: any) => ({
         id: doc.id,
@@ -37,7 +37,7 @@ export class DocumentsService {
       })),
     };
     const mianDocsData: EachDocumentKeyDataType = {
-      title: 'ឯកសារសំខាន់ៗ',
+      title: lang === 'kh' ? 'ឯកសារសំខាន់ៗ' : 'Important documents',
       seeAll: lang === 'kh' ? 'ទាំងអស់' : 'See all',
       docKeys: getNewDocs.map((doc: any) => ({
         id: doc.id,
