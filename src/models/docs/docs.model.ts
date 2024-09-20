@@ -19,7 +19,7 @@ class Docs extends Model<Docs> {
 
     // ======================================================================================>> Fields
     @Column({ allowNull: false, type: DataType.STRING(300) })                   title?: string;
-    @Column({ allowNull: false, type: DataType.STRING(100) })                   file_uri?: string;
+    @Column({ allowNull: false, type: DataType.STRING(300) })                   file_uri?: string;
     @Column({ allowNull: false, type: DataType.STRING(10) })                    extension?: string;
     @Column({ allowNull: false, type: DataType.BOOLEAN, defaultValue: true })   is_active?: boolean;
 

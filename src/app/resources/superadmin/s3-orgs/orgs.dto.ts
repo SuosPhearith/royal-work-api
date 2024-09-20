@@ -4,7 +4,6 @@ import { IsNotEmpty, IsString, IsOptional, MaxLength } from 'class-validator';
 export class OrgsCreateDto{
     @IsString()
     @IsNotEmpty({ message: "Image is required!" })
-    @MaxLength(100, {message: "Image uri is too long"})
     image_uri: string;
 
     @IsString()
@@ -21,7 +20,6 @@ export class OrgsCreateDto{
 export class OrgsUpdateDto{
     @IsString()
     @IsOptional()
-    @MaxLength(100, {message: "Image uri is too long"})
     image_uri: string;
 
     @IsString()

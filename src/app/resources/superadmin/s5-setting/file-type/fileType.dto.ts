@@ -9,7 +9,6 @@ export class fileTypeCreateDto{
 
     @IsString()
     @IsNotEmpty({ message: "Image is required!" })
-    @MaxLength(100, {message: "Image uri is too long"})
     image_uri: string;
 }
 
@@ -21,6 +20,5 @@ export class fileTypeUpdateDto{
 
     @IsString()
     @IsOptional()
-    @MaxLength(100, {message: "Image uri is too long"})
     image_uri: string;
 }

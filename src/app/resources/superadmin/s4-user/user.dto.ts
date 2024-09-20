@@ -14,7 +14,6 @@ export class UserCreateDto{
 
     @IsString()
     @IsNotEmpty({ message: "Image avatar is required!" })
-    @MaxLength(100, {message: "Image avatar uri is too long"})
     avatar: string;
 
     @IsNumber()
@@ -47,7 +46,6 @@ export class UserUpdateDto{
 
     @IsString()
     @IsOptional()
-    @MaxLength(100, {message: "Image avatar uri is too long"})
     avatar: string;
 
     @IsNumber()
