@@ -9,7 +9,7 @@ class FileDocs extends Model<FileDocs> {
 
     // ======================================================================>> Fields
     @Column({ allowNull: false, type: DataType.STRING(100) })   name?: string;
-    @Column({ allowNull: false, type: DataType.STRING(100) })   image_uri?: string;
+    @Column({ allowNull: false, type: DataType.STRING(300) })   image_uri?: string;
 
     // ======================================================================>> One to many 
     @HasMany(() => Docs)                                        docs: Docs[];

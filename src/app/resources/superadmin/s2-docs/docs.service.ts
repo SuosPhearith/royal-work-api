@@ -138,6 +138,29 @@ export class DocsService {
                 throw new BadRequestException("File is required!")
             }
 
+            if(extension){
+                let defaultLogo: string = 'upload/file/79057443-1a9d-4ebb-92c7-8344aea38d71';
+                 // Fetch all file names
+                const allFileName = await FileDocs.findAll({
+                    attributes: ['id', 'name'],
+                });
+
+                // Check if the extension exists in the list of names
+                const fileExists = allFileName.some(file => file.name === extension);
+
+                if (!fileExists) {
+                    // Create a new entry since the extension was not found
+                    const newFile = await FileDocs.create({
+                        name: extension,
+                        image_uri: defaultLogo
+                    });
+                    console.log('New file created:', newFile);
+                } else {
+                    console.log('File with this extension already exists.');
+                }
+            }
+
+            
             const findFileName = await FileDocs.findOne({
                 attributes: ['id'],
                 where :{
@@ -158,11 +181,10 @@ export class DocsService {
                 orgs_id: body.orgs_id,
                 file_id: file_id,
                 title: body.title,
-                is_active: Boolean(body.is_active),
+                is_active: body.is_active,
                 file_uri: fileUri,
                 extension: extension,
             });
-
            
             return {
                 status: 'success',
@@ -200,6 +222,28 @@ export class DocsService {
                 extension = uploadResult.extension.slice(1);
 
             }
+            
+            if(extension){
+                let defaultLogo: string = 'upload/file/79057443-1a9d-4ebb-92c7-8344aea38d71';
+                 // Fetch all file names
+                const allFileName = await FileDocs.findAll({
+                    attributes: ['id', 'name'],
+                });
+
+                // Check if the extension exists in the list of names
+                const fileExists = allFileName.some(file => file.name === extension);
+
+                if (!fileExists) {
+                    // Create a new entry since the extension was not found
+                    const newFile = await FileDocs.create({
+                        name: extension,
+                        image_uri: defaultLogo
+                    });
+                    console.log('New file created:', newFile);
+                } else {
+                    console.log('File with this extension already exists.');
+                }
+            }
 
             const findFileName = await FileDocs.findOne({
                 attributes: ['id'],
@@ -219,7 +263,7 @@ export class DocsService {
                 orgs_id: body.orgs_id,
                 docs_type_id: body.docs_type_id,
                 file_id: file_id,
-                is_active: Boolean(body.is_active),
+                is_active: body.is_active,
                 file_uri: fileUri,
                 extension: extension,
 
@@ -234,7 +278,7 @@ export class DocsService {
            
             return {
                 status: 'success',
-                message: 'បង្កើតឯកសារបានដោយជោគជ័យ',
+                message: 'កែប្រែឯកសារបានដោយជោគជ័យ',
                 data: res_docs,
 
             };

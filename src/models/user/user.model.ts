@@ -10,7 +10,7 @@ class User extends Model<User> {
     // =================================================================================================>> Fields
     @Column({ allowNull: false, type: DataType.STRING(100) })                   kh_name?: string;
     @Column({ allowNull: true, type: DataType.STRING(100) })                    en_name?: string;
-    @Column({ allowNull: true, type: DataType.STRING(100) })                    avatar?: string;
+    @Column({ allowNull: true, type: DataType.STRING(300) })                    avatar?: string;
     @Column({ allowNull: false, unique: true, type: DataType.STRING(100) })     phone?: string;
     @Column({ allowNull: true, unique: true, type: DataType.STRING(100) })      email?: string;
     @Column({ allowNull: false, type: DataType.STRING(100) })                   password?: string;
