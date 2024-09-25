@@ -12,6 +12,10 @@ import { OrgsSeeder } from './seeders/orgs/orgs.seeder';
 import { FileSeeder } from './seeders/file/file.seeder';
 import { DocsSeeder } from './seeders/docs/docs.seeder';
 import { DocsTypeSeeder } from './seeders/docs/docs_type.seeder';
+import { LanguageSeeder } from './seeders/language/language.seeder';
+import { UIMinistrySeeder } from './seeders/ui_ministry/ui_ministry.seeder';
+import { UITextSeeder } from './seeders/ui_text/ui_text.seeder';
+import { LogoSeeder } from './seeders/logo/logo.seeder';
 
 
 
@@ -37,6 +41,10 @@ async function seeds() {
         // drop all existing UserGroup in the database and recreate it again.
         await sequelize.sync({ force: true });
 
+         /** @seedLanguage ======================================= *////////////////////////////////
+        const languageSeeder = new LanguageSeeder();
+        await languageSeeder.seed();
+
         /** @seedUser ======================================= *////////////////////////////////
         const userSeeder = new UserSeeder();
         await userSeeder.seed();
@@ -56,6 +64,16 @@ async function seeds() {
         /** @seedDocs ======================================= *////////////////////////////////
         const docsSeeder = new DocsSeeder();
         await docsSeeder.seed();
+
+        /** @seedUI ======================================= *////////////////////////////////
+        const ui_ministrySeeder = new UIMinistrySeeder();
+        await ui_ministrySeeder.seed();
+        const ui_textSeeder = new UITextSeeder();
+        await ui_textSeeder.seed();
+        const ui_logoSeeder = new LogoSeeder();
+        await ui_logoSeeder.seed();
+
+        
        
 
     

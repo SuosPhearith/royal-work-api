@@ -3,6 +3,7 @@ import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from '
 // ===================================================================================================>> Custom Library
 import UserRole from './user_role.model';
 import DocsSaved from '../docs/docs_saved.model';
+import DocsView from '../docs/docs_view.model';
 
 @Table({ tableName: 'user', createdAt: 'created_at', updatedAt: 'updated_at' })
 class User extends Model<User> {
@@ -18,9 +19,9 @@ class User extends Model<User> {
     @Column({ allowNull: true, type: DataType.INTEGER })                        creator_id?: number
 
     // =================================================================================================>> One to Many
-    @HasMany(() => UserRole)                                        roles: UserRole[];
-    @HasMany(() => DocsSaved)                                       docs_saved: DocsSaved[];
-
+    @HasMany(() => UserRole)                                                    roles: UserRole[];
+    @HasMany(() => DocsSaved)                                                   docs_saved: DocsSaved[];
+    @HasMany(() => DocsView)                                                    docs_view: DocsView[];
 }
 
 export default User;

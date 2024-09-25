@@ -7,6 +7,7 @@ import Orgs from '../orgs/orgs.model';
 import User from '../user/user.model';
 import DocsEditor from './docs_editor.model';
 import DocsSaved from './docs_saved.model';
+import DocsView from './docs_view.model';
 
 @Table({ tableName: 'docs', createdAt: 'created_at', updatedAt: 'updated_at'})
 class Docs extends Model<Docs> {
@@ -15,13 +16,14 @@ class Docs extends Model<Docs> {
     @ForeignKey(()=> DocsType) @Column({ onDelete: 'CASCADE' })                 docs_type_id: number;
     @ForeignKey(()=> FileDocs) @Column({ onDelete: 'CASCADE' })                 file_id: number;
     @ForeignKey(()=> Orgs)     @Column({ onDelete: 'CASCADE' })                 orgs_id: number;
-    @ForeignKey(()=> User)     @Column({ onDelete: 'CASCADE' })                 creator_id: number;
+    @ForeignKey(()=> User)     @Column({ onDelete: 'SET NULL' })                creator_id: number;
 
     // ======================================================================================>> Fields
     @Column({ allowNull: false, type: DataType.STRING(300) })                   title?: string;
     @Column({ allowNull: false, type: DataType.STRING(300) })                   file_uri?: string;
     @Column({ allowNull: false, type: DataType.STRING(10) })                    extension?: string;
     @Column({ allowNull: false, type: DataType.BOOLEAN, defaultValue: true })   is_active?: boolean;
+    @Column({ allowNull: true, type: DataType.STRING(300) })                    image_uri?: string;
 
     // ======================================================================================>> Many to one
     @BelongsTo(() => DocsType)                                                  docs_type: DocsType;
@@ -32,5 +34,6 @@ class Docs extends Model<Docs> {
     // ======================================================================================>> one to Many
     @HasMany(() => DocsEditor)                                                  docs_editor: DocsEditor[];
     @HasMany(() => DocsSaved)                                                   docs_saved: DocsSaved[];
+    @HasMany(() => DocsView)                                                    docs_view: DocsView[];
 }
 export default Docs;

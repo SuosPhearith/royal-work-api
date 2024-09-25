@@ -25,6 +25,7 @@ export class DocsSeeder {
         file_uri: 'upload/file/6ed3be79-9d9a-4b95-b1c7-93b5ba902201',
         extension: 'pdf',
         is_active: true,
+        image_uri: 'upload/file/0ee90f9b-247b-40c1-a482-b6d57549984f',
       },
       {
         docs_type_id: 7,
@@ -35,6 +36,7 @@ export class DocsSeeder {
         file_uri: 'upload/file/41ed21d9-db8d-4e87-81cc-85481467d4fb',
         extension: 'pdf',
         is_active: true,
+        image_uri: 'upload/file/7b34b44b-0d7c-44c5-a943-50c46fa0045b',
       },
       {
         docs_type_id: 7,
@@ -45,6 +47,7 @@ export class DocsSeeder {
         file_uri: 'upload/file/49ab2e86-6e2b-494c-96b3-f50810a299ed',
         extension: 'pdf',
         is_active: true,
+        image_uri: 'upload/file/66f8874a-cd5a-41f7-b9f3-a20828f2763b',
       },
       {
         docs_type_id: 1,
@@ -55,6 +58,7 @@ export class DocsSeeder {
         file_uri: 'upload/file/3b06b8c6-fb69-47a2-987c-613751e3e9e0',
         extension: 'pdf',
         is_active: true,
+        image_uri: 'upload/file/9e69c5ce-3ba2-4d05-91dd-26ae83744ca3',
       },
       {
         docs_type_id: 3,
@@ -65,6 +69,7 @@ export class DocsSeeder {
         file_uri: 'upload/file/34e862cb-346f-4390-883c-8f93a6568278',
         extension: 'pdf',
         is_active: true,
+        image_uri: 'upload/file/1069cdbb-b0b5-4e45-a487-08cb6a9468df',
       },
       {
         docs_type_id: 8,
@@ -75,6 +80,7 @@ export class DocsSeeder {
         file_uri: 'upload/file/d53589ef-7bc3-473c-b046-18eb40aabee4',
         extension: 'pdf',
         is_active: true,
+        image_uri: 'upload/file/4c803b9b-664f-4f58-af1a-db30eca09d69',
       },
       {
         docs_type_id: 8,
@@ -85,6 +91,7 @@ export class DocsSeeder {
         file_uri: 'upload/file/4c0d64ff-60ae-4c11-abb1-dc88c0e1e36e',
         extension: 'pdf',
         is_active: true,
+        image_uri: 'upload/file/6a87e962-488b-4111-8b79-bf03b6e57a34',
       },
       {
         docs_type_id: 8,
@@ -95,6 +102,7 @@ export class DocsSeeder {
         file_uri: 'upload/file/92a9277a-b091-4a9e-9a22-1d6ae37ea450',
         extension: 'pdf',
         is_active: true,
+        image_uri: 'upload/file/fd9687fb-b6d2-4360-89a2-5173270a5864',
       },
     ],
 }
