@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import axios from 'axios';
 import { Op } from 'sequelize';
 import Docs from 'src/models/docs/docs.model';
 import DocsType from 'src/models/docs/docs_type.model';
 import { DocumentListWeb } from './interface/documentWeb.interface';
+import Language from 'src/models/language/language.model';
+import ListDocsText from 'src/models/ui_text/list_docs_text.model';
+import { UpdateListDocsTextDto } from './dto/list-docs.dto';
 
 @Injectable()
 export class ListDocsService {
@@ -45,18 +48,48 @@ export class ListDocsService {
     }
   }
 
-  async getWebData(lang: string): Promise<DocumentListWeb> {
-    const documentListWeb: DocumentListWeb = {
-      homePage: lang === 'kh' ? 'ទំព័រដើម' : 'Home',
-      currectPage: lang === 'kh' ? 'ស្វែងរក' : 'Search',
-      SearchPaceholder: lang === 'kh' ? 'ស្វែងរកឯកសារ' : 'Search document',
-      id: lang === 'kh' ? 'លេខសម្គាល់' : 'ID',
-      title: lang === 'kh' ? 'ចំណងជើង' : 'Title',
-      download: lang === 'kh' ? 'ទាញយក' : 'Downlaod',
-      previous: lang === 'kh' ? 'មុន' : 'Previous',
-      next: lang === 'kh' ? 'បន្ទាប់' : 'Next',
+  async getWebData(lang: string = 'kh'): Promise<DocumentListWeb> {
+    // const find id lang
+    const langId = await Language.findOne({ where: { code: lang } });
+    const response = await ListDocsText.findOne({
+      where: { language_id: langId.id },
+    });
+    // filter response
+    const dataRes: DocumentListWeb = {
+      homePage: response.home_page,
+      currectPage: response.current_page,
+      SearchPaceholder: response.search_placeholder,
+      id: response.docs_id_label,
+      title: response.title_label,
+      download: response.download_label,
+      previous: response.previous_label,
+      next: response.next_label,
     };
-    return documentListWeb;
+    return dataRes;
+  }
+
+  async getAllListDoc(): Promise<ListDocsText[]> {
+    // get data from db
+    const listDocData = await ListDocsText.findAll({ include: ['language'] });
+    return listDocData;
+  }
+
+  async updateListDoc(
+    id: number,
+    updateListDocsTextDto: UpdateListDocsTextDto,
+  ) {
+    // is valid id
+    const listDocId = await ListDocsText.findByPk(id);
+    if (!listDocId) {
+      throw new NotFoundException();
+    }
+
+    // perform the update
+    await ListDocsText.update(updateListDocsTextDto, { where: { id } });
+
+    // Fetch and return the updated record
+    const updatedInfo = await ListDocsText.findByPk(id);
+    return updatedInfo;
   }
 
   async downloadFileFromExternalService(fileUrl: string) {

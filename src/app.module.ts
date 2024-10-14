@@ -28,6 +28,7 @@ import { MinistryModule } from './app/resources/user-web/ministry/ministry.modul
 import { FooterModule } from './app/resources/user-web/footer/footer.module';
 import { ListDocsModule } from './app/resources/user-web/list-docs/list-docs.module';
 import { DocumentsModule } from './app/resources/user-web/documents/documents.module';
+import { LanguageModule } from './app/resources/user-web/language/language.module';
 
 // User role
 
@@ -53,6 +54,7 @@ import { DocumentsModule } from './app/resources/user-web/documents/documents.mo
     FooterModule,
     ListDocsModule,
     DocumentsModule,
+    LanguageModule,
   ],
   controllers: [AppController], // Controller Declaration
   providers: [

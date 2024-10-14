@@ -1,78 +1,96 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { MinistryData } from './interface/ministry.interface';
+import Language from 'src/models/language/language.model';
+import MinistryTitle from 'src/models/ui_ministry/ministry_title.model';
+import MinistryLogo from 'src/models/ui_ministry/ministry_logo.model';
+import { UpdateMinistryTitleDto } from './dto/update-ministry-title.dto';
+import { CreateMinistryLogoDto } from './dto/create-ministry-logo.dto';
+import { FileService } from 'src/app/services/file.service';
 
 @Injectable()
 export class MinistryService {
-  async getMinistryData(lang: string = 'kh'): Promise<MinistryData> {
+  constructor(private fileService: FileService) {}
+  async getMinistryData(lang: string = 'en'): Promise<MinistryData> {
     try {
+      // const find id lang
+      const langId = await Language.findOne({ where: { code: lang } });
+      const response = await MinistryTitle.findOne({
+        where: { language_id: langId.id },
+      });
+      const ministryLogoes = await MinistryLogo.findAll();
+      // filter logoes
+      const logoes = ministryLogoes.map((i) => ({
+        id: i.dataValues.id,
+        name: i.dataValues.name,
+        image: i.dataValues.image,
+      }));
       const ministryData: MinistryData = {
-        title: lang === 'kh' ? 'ក្រសួង-ស្ថាប័ន' : 'Ministries and Institutions',
-        logo: [
-          {
-            id: 1,
-            name: 'Ministry of Agriculture, Forestry, and Fisheries',
-            image: `upload/file/53feccb7-10e3-4364-979e-55d0386b5d2d`,
-          },
-          {
-            id: 2,
-            name: 'Ministry of Economy and Finance',
-            image: `upload/file/ea2be358-c018-411b-b7af-11f6f705b221`,
-          },
-          {
-            id: 3,
-            name: 'Ministry of Agriculture, Forestry, and Industry',
-            image: `upload/file/2b0e1cfd-961b-4e21-872d-306eb39e3220`,
-          },
-          {
-            id: 4,
-            name: 'Ministry of Mines and Energy',
-            image: `upload/file/3565b347-752c-4d61-b05c-762d65f5fc36`,
-          },
-          {
-            id: 5,
-            name: 'Ministry of Commerce',
-            image: `upload/file/c2a915d9-4512-4f68-8e04-5ccb99375829`,
-          },
-          {
-            id: 6,
-            name: 'Ministry of Environment',
-            image: `upload/file/86edd88f-82ad-4f67-8297-6defcc076365`,
-          },
-          {
-            id: 7,
-            name: 'Ministry of Education, Youth and Sports',
-            image: `upload/file/cb0761be-b1d5-4c91-b9fd-79d333ba7eeb`,
-          },
-          {
-            id: 8,
-            name: 'Ministry of Interior',
-            image: `upload/file/be235ee9-13a8-49cd-a7cd-b8b0ca6eff23`,
-          },
-          {
-            id: 9,
-            name: 'Ministry of Information',
-            image: `upload/file/86b77fd5-13b9-44e7-87e7-5a89b992c757`,
-          },
-          {
-            id: 10,
-            name: 'Ministry of Tourism',
-            image: `upload/file/b1f19089-77ca-4b18-b770-1987fcc84e69`,
-          },
-          {
-            id: 11,
-            name: 'Ministry of Posts and Telecommunications',
-            image: `upload/file/3ca55015-38e1-4a56-b336-77fbdfefc2eb`,
-          },
-          {
-            id: 12,
-            name: 'Ministry of Public Works and Transport',
-            image: `upload/file/eec543f3-1087-4902-9d8b-cbbb5c3c820c`,
-          },
-        ],
+        title: response.title,
+        logo: logoes,
       };
       return ministryData;
     } catch (error) {
       throw error;
     }
+  }
+
+  async getAllMinistryTitle(): Promise<MinistryTitle[]> {
+    // get data from db
+    const res = await MinistryTitle.findAll({ include: ['language'] });
+    return res;
+  }
+
+  async updateMinistryTitle(
+    id: number,
+    updateMinistryTitleDto: UpdateMinistryTitleDto,
+  ) {
+    // is valid Id
+    const ministryTitleId = await MinistryTitle.findByPk(id);
+    if (!ministryTitleId) {
+      throw new NotFoundException();
+    }
+    // Perform the update
+    await MinistryTitle.update(updateMinistryTitleDto, {
+      where: { id },
+    });
+    return 'Updated successfully';
+  }
+
+  // logo
+
+  async getAllMinistryLogo(): Promise<MinistryLogo[]> {
+    // get data from db
+    const res = await MinistryLogo.findAll();
+    return res;
+  }
+
+  async getOneMinistryLogo(id: number): Promise<MinistryLogo> {
+    // is valid id
+    const isMinistryLogo = await MinistryLogo.findByPk(id);
+    if (!isMinistryLogo) {
+      throw new NotFoundException();
+    }
+    return isMinistryLogo;
+  }
+
+  async createMinistryLogo(createMinistryLogoDto: CreateMinistryLogoDto) {
+    const fileResult = await this.fileService.uploadBase64Image(
+      'fileType',
+      createMinistryLogoDto.image,
+    );
+    // Perform the create
+    await MinistryLogo.create({
+      ...createMinistryLogoDto,
+      image: fileResult.file.uri,
+    });
+    return 'Created successfully';
+  }
+
+  async deleteMinistryLogo(id: number) {
+    // is valid id
+    const ministryLogo = await this.getOneMinistryLogo(id);
+    // Perform the create
+    await MinistryLogo.destroy({ where: { id: ministryLogo.id } });
+    return 'Deleted successfully';
   }
 }
