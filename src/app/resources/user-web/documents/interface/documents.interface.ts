@@ -8,6 +8,7 @@ export interface DocumentKey {
   id: number;
   title: string;
   file_uri: string;
+  image_uri: string;
   extension: string;
   created_at: string;
   markbook: boolean;

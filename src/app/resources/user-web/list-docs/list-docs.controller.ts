@@ -18,8 +18,14 @@ export class ListDocsController {
   constructor(private readonly listDocsService: ListDocsService) {}
   @Get()
   async getAllDocs(@Query() getDocsDto: GetDcosDto) {
-    const { search, limit, page } = getDocsDto;
-    return await this.listDocsService.getDocs(search, limit, page);
+    const { search, orgs, orgs_type, limit, page } = getDocsDto;
+    return await this.listDocsService.getDocs(
+      search,
+      orgs,
+      orgs_type,
+      limit,
+      page,
+    );
   }
   @Get('/web')
   async getWebData(@Query('lang') lang: string) {
@@ -55,5 +61,15 @@ export class ListDocsController {
       console.error('Error downloading file:', error);
       res.status(500).send('Error downloading the file');
     }
+  }
+
+  // org
+  @Get('orgs')
+  async getAllOrgs() {
+    return await this.listDocsService.getAllOrgs();
+  }
+  @Get('orgs-type')
+  async getAllOrgsType() {
+    return await this.listDocsService.getAllOrgsType();
   }
 }

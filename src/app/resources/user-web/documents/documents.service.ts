@@ -30,8 +30,9 @@ export class DocumentsService {
       seeAll: docsListUi.all_text,
       docKeys: getNewDocs.map((doc: any) => ({
         id: doc.id,
-        title: doc.docs_type.name,
+        title: doc.title,
         file_uri: doc.file_uri,
+        image_uri: doc.image_uri,
         extension: doc.extension,
         created_at: doc.created_at,
         markbook: false,
@@ -52,6 +53,7 @@ export class DocumentsService {
         id: doc.id,
         title: doc.docs_type.name,
         file_uri: doc.file_uri,
+        image_uri: doc.image_uri,
         extension: doc.extension,
         created_at: doc.created_at,
         markbook: false,

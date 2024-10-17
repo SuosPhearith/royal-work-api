@@ -5,6 +5,12 @@ export class GetDcosDto {
   @IsString()
   search: string = '';
 
+  @IsString()
+  orgs: string = '';
+
+  @IsString()
+  orgs_type: string = '';
+
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
